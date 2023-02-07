@@ -74,8 +74,7 @@ then
 	pip3 check
 	deactivate
 	mkdir -p /home/$USER/bin
-	cd /home/$USER/bin
-	ln -s /opt/.venv-zephyr/bin/west .
+	ln -s /opt/.venv-zephyr/bin/west /home/$USER/bin/west
 	cd $WORKSPACE_PATH
 	echo -e "\033[1;32mSTATUS: west has been installed and linked."
 	echo -e "\033[0m"
@@ -166,6 +165,11 @@ if ! grep -qF "export ZEPHYR_TOOLCHAIN_VARIANT=zephyr" /home/$USER/.bashrc
 then
 	export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
 	echo "export ZEPHYR_TOOLCHAIN_VARIANT=zephyr" >> /home/$USER/.bashrc
+	echo -e "\033[1;32mSTATUS: Added ZEPHYR_TOOLCHAIN_VARIANT to ~/.bashrc"
+	echo -e "\033[0m"
+else
+	echo -e "\033[1;32mSTATUS: ZEPHYR_TOOLCHAIN_VARIANT already in ~/.bashrc"
+	echo -e "\033[0m"
 fi
 
 # Export zephyr sdk dir path if it does not exist.
@@ -173,6 +177,11 @@ if ! grep -qF "export ZEPHYR_SDK_INSTALL_DIR=/opt/toolchains/zephyr-sdk-${ZSDK_V
 then
 	export ZEPHYR_SDK_INSTALL_DIR=/opt/toolchains/zephyr-sdk-${ZSDK_VERSION}/
 	echo "export ZEPHYR_SDK_INSTALL_DIR=/opt/toolchains/zephyr-sdk-${ZSDK_VERSION}/" >> /home/$USER/.bashrc
+	echo -e "\033[1;32mSTATUS: Added ZEPHYR_SDK_INSTALL_DIR to ~/.bashrc"
+	echo -e "\033[0m"
+else
+	echo -e "\033[1;32mSTATUS: ZEPHYR_SDK_INSTALL_DIR already in ~/.bashrc"
+	echo -e "\033[0m"
 fi
 
 # Source humble if it does not exist.
@@ -180,6 +189,11 @@ if ! grep -qF "source /opt/ros/humble/setup.bash" /home/$USER/.bashrc
 then
 	source /opt/ros/humble/setup.bash
 	echo "source /opt/ros/humble/setup.bash" >> /home/$USER/.bashrc
+	echo -e "\033[1;32mSTATUS: Added ROS2 Humble to ~/.bashrc"
+	echo -e "\033[0m"
+else
+	echo -e "\033[1;32mSTATUS: ROS2 Humble already in ~/.bashrc"
+	echo -e "\033[0m"
 fi
 
 # Source colcon arg complete if it does not exist.
@@ -187,6 +201,11 @@ if ! grep -qF "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
 then
 	source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
 	echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> /home/$USER/.bashrc
+	echo -e "\033[1;32mSTATUS: Added colcon_argcomplete to ~/.bashrc"
+	echo -e "\033[0m"
+else
+	echo -e "\033[1;32mSTATUS: colcon_argcomplete already in ~/.bashrc"
+	echo -e "\033[0m"
 fi
 
 # Export cyclone if it does not exist.
@@ -194,6 +213,11 @@ if ! grep -qF "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" /home/$USER/.bashrc
 then
 	export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 	echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> /home/$USER/.bashrc
+	echo -e "\033[1;32mSTATUS: Added RMW_IMPLEMENTATION to ~/.bashrc"
+	echo -e "\033[0m"
+else
+	echo -e "\033[1;32mSTATUS: RMW_IMPLEMENTATION already in ~/.bashrc"
+	echo -e "\033[0m"
 fi
 
 eval "$( cat /home/$USER/.bashrc | tail -n +10)"
@@ -217,13 +241,24 @@ then
 	vcs pull
 fi
 
+if [ -d $WORKSPACE_PATH/cerebri_workspace/cerebri ]
+then
+	if ! [ -f $/home/$USER/bin/cerebri ]
+	then
+		ln -s $WORKSPACE_PATH/cerebri_workspace/cerebri/build/zephyr/zephyr.elf /home/$USER/bin/cerebri
+		echo -e "\033[1;32mSTATUS: symlinked $WORKSPACE_PATH/cerebri_workspace/cerebri/build/zephyr/zephyr.elf to /home/$USER/bin/cerebri"
+		echo -e "\033[0m"
+	else
+		echo -e "\033[1;32mSTATUS: $WORKSPACE_PATH/cerebri_workspace/cerebri/build/zephyr/zephyr.elf already symlinked to /home/$USER/bin/cerebri"
+		echo -e "\033[0m"
+fi
 
 if [ -d $WORKSPACE_PATH/cranium/src ]
 then
 	echo -e "\033[1;32mSTATUS: Building cranium."
 	echo -e "\033[0m"
 	cd $WORKSPACE_PATH/cranium
-	colcon build --cmake-args -DBUILD_TESTING=OFF --merge-install
+	colcon build --symlink-install
 	echo -e "\033[1;32mSTATUS: cranium built."
 	echo -e "\033[0m"
 
@@ -275,18 +310,18 @@ then
 	# Export gz resources if it does not exist.
 	if ! grep -qF "export GZ_SIM_RESOURCE_PATH=" /home/$USER/.bashrc
 	then
-		echo "export GZ_SIM_RESOURCE_PATH=$WORKSPACE_PATH/dream/models:$WORKSPACE_PATH/dream/worlds" >> /home/$USER/.bashrc
+		echo "export GZ_SIM_RESOURCE_PATH=$WORKSPACE_PATH/cranium/src/dream/models:$WORKSPACE_PATH/cranium/src/dream/worlds" >> /home/$USER/.bashrc
 	else
 		# If export does exist but does not have correct models path thow a warning to manually fix.
-		if ! echo $GZ_SIM_RESOURCE_PATH | grep -qF "$WORKSPACE_PATH/dream/models"
+		if ! echo $GZ_SIM_RESOURCE_PATH | grep -qF "$WORKSPACE_PATH/cranium/src/dream/models"
 		then
-			echo -e "\033[0;31mWARNING!!! It appears you already have a GZ_SIM_RESOURCE_PATH but $WORKSPACE_PATH/dream/models is not in it!"
+			echo -e "\033[0;31mWARNING!!! It appears you already have a GZ_SIM_RESOURCE_PATH but $WORKSPACE_PATH/cranium/src/dream/models is not in it!"
 			echo -e "\033[0m"
 		fi
 		# If export does exist but does not have correct worlds path thow a warning to manually fix.
-		if ! echo $GZ_SIM_RESOURCE_PATH | grep -qF "$WORKSPACE_PATH/dream/worlds"
+		if ! echo $GZ_SIM_RESOURCE_PATH | grep -qF "$WORKSPACE_PATH/cranium/src/dream/worlds"
 		then
-			echo -e "\033[0;31mWARNING!!! It appears you already have a GZ_SIM_RESOURCE_PATH but $WORKSPACE_PATH/dream/worlds is not in it!"
+			echo -e "\033[0;31mWARNING!!! It appears you already have a GZ_SIM_RESOURCE_PATH but $WORKSPACE_PATH/cranium/src/dream/worlds is not in it!"
 			echo -e "\033[0m"
 		fi
 	fi
@@ -311,7 +346,7 @@ then
 	echo -e "\033[0m"
 	cd $WORKSPACE_PATH/electrode
 	source ~/.bashrc
-	colcon build --cmake-args -DBUILD_TESTING=OFF --merge-install
+	colcon build --symlink-install
 	echo -e "\033[1;32mSTATUS: electrode built."
 	echo -e "\033[0m"
 
