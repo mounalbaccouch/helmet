@@ -12,7 +12,7 @@ repositories:
     type: git
     url: git@github.com:cognipilot/synapse_msgs
     version: main
-  dream:
+  cranium/src/dream:
     type: git
     url: git@github.com:CogniPilot/dream
     version: main
