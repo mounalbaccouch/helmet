@@ -251,6 +251,7 @@ then
 	else
 		echo -e "\033[1;32mSTATUS: $WORKSPACE_PATH/cerebri_workspace/cerebri/build/zephyr/zephyr.elf already symlinked to /home/$USER/bin/cerebri"
 		echo -e "\033[0m"
+	fi
 fi
 
 if [ -d $WORKSPACE_PATH/cranium/src ]
