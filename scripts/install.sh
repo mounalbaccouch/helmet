@@ -70,8 +70,10 @@ then
 	source /opt/.venv-zephyr/bin/activate
 	pip install wheel
 	pip install west
+	pip install catkin-tools
 	pip install -r https://raw.githubusercontent.com/zephyrproject-rtos/zephyr/master/scripts/requirements.txt
 	pip3 check
+	sudo chown $CURRENT_USER:$CURRENT_USER /opt/zephyr
 	deactivate
 	mkdir -p /home/$USER/bin
 	ln -s /opt/.venv-zephyr/bin/west /home/$USER/bin/west
@@ -102,6 +104,21 @@ then
 	echo -e "\033[0m"
 else
 	echo -e "\033[1;32mSTATUS: zephyr sdk has already been installed and linked."
+	echo -e "\033[0m"
+fi
+
+if ! [ -f /opt/zephyr/.west ]
+then
+	source /opt/.venv-zephyr/bin/activate
+	pip install catkin-tools
+	sudo mkdir -p /opt/zephyr
+	cd /opt/zephyr
+	west init --mr v3.2.0
+	deactivate
+	echo -e "\033[1;32mSTATUS: zephyr base has been installed."
+	echo -e "\033[0m"
+else
+	echo -e "\033[1;32mSTATUS: zephyr base has already been installed."
 	echo -e "\033[0m"
 fi
 
@@ -181,6 +198,18 @@ then
 	echo -e "\033[0m"
 else
 	echo -e "\033[1;32mSTATUS: ZEPHYR_SDK_INSTALL_DIR already in ~/.bashrc"
+	echo -e "\033[0m"
+fi
+
+# Export zephyr base if it does not exist.
+if ! grep -qF "export ZEPHYR_BASE=/opt/zephyr/zephyr" /home/$USER/.bashrc
+then
+	export ZEPHYR_BASE=/opt/zephyr/zephyr
+	echo "export ZEPHYR_BASE=/opt/zephyr/zephyr" >> /home/$USER/.bashrc
+	echo -e "\033[1;32mSTATUS: Added ZEPHYR_BASE to ~/.bashrc"
+	echo -e "\033[0m"
+else
+	echo -e "\033[1;32mSTATUS: ZEPHYR_BASE already in ~/.bashrc"
 	echo -e "\033[0m"
 fi
 
@@ -358,6 +387,30 @@ then
 		cat << EOF >> /home/$USER/.bashrc
 if [ -f $WORKSPACE_PATH/electrode/install/setup.bash ]; then
 	source $WORKSPACE_PATH/electrode/install/setup.bash
+fi
+EOF
+	fi
+	cd $WORKSPACE_PATH
+	eval "$( cat /home/$USER/.bashrc | tail -n +10)"
+fi
+
+if [ -d $WORKSPACE_PATH/tools/src ]
+then
+	echo -e "\033[1;32mSTATUS: Building tools."
+	echo -e "\033[0m"
+	cd $WORKSPACE_PATH/tools
+	source ~/.bashrc
+	colcon build --symlink-install
+	echo -e "\033[1;32mSTATUS: tools built."
+	echo -e "\033[0m"
+
+	# Source tools logic if it does not exist.
+	if ! grep -qF "source $WORKSPACE_PATH/tools/install/setup.bash" /home/$USER/.bashrc
+	then
+		source $WORKSPACE_PATH/tools/install/setup.bash
+		cat << EOF >> /home/$USER/.bashrc
+if [ -f $WORKSPACE_PATH/tools/install/setup.bash ]; then
+	source $WORKSPACE_PATH/tools/install/setup.bash
 fi
 EOF
 	fi
