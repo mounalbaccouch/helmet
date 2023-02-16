@@ -8,7 +8,7 @@ repositories:
     type: git
     url: git@github.com:CogniPilot/corti
     version: main
-  cranium/src/synapse_msgs:
+  gazebo/src/synapse_msgs:
     type: git
     url: git@github.com:cognipilot/synapse_msgs
     version: main

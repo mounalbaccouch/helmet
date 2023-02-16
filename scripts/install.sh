@@ -161,6 +161,18 @@ then
 	echo "" >> /home/$USER/.bashrc
 fi
 
+# Export python setuptools warning ignore.
+if ! grep -qF "export PYTHONWARNINGS=ignore:::setuptools.installer,ignore:::setuptools.command.install"  /home/$USER/.bashrc
+then
+	export PYTHONWARNINGS=ignore:::setuptools.installer,ignore:::setuptools.command.install
+	echo "export PYTHONWARNINGS=ignore:::setuptools.installer,ignore:::setuptools.command.install" >> /home/$USER/.bashrc
+	echo -e "\033[1;32mSTATUS: Added PYTHONWARNINGS to ~/.bashrc"
+	echo -e "\033[0m"
+else
+	echo -e "\033[1;32mSTATUS: PYTHONWARNINGS already in ~/.bashrc"
+	echo -e "\033[0m"
+fi
+
 # Export zephyr toolchain variant if it does not exist.
 if ! grep -qF "export ZEPHYR_TOOLCHAIN_VARIANT=zephyr" /home/$USER/.bashrc
 then
@@ -273,35 +285,23 @@ then
 	eval "$( cat /home/$USER/.bashrc | tail -n +10)"
 fi
 
-if [ -d $WORKSPACE_PATH/cerebri_workspace/cerebri ]
+if [ -d $WORKSPACE_PATH/tools/src ]
 then
-	if ! [ -f $/home/$USER/bin/cerebri ]
-	then
-		ln -s $WORKSPACE_PATH/cerebri_workspace/cerebri/build/zephyr/zephyr.elf /home/$USER/bin/cerebri
-		echo -e "\033[1;32mSTATUS: symlinked $WORKSPACE_PATH/cerebri_workspace/cerebri/build/zephyr/zephyr.elf to /home/$USER/bin/cerebri"
-		echo -e "\033[0m"
-	else
-		echo -e "\033[1;32mSTATUS: $WORKSPACE_PATH/cerebri_workspace/cerebri/build/zephyr/zephyr.elf already symlinked to /home/$USER/bin/cerebri"
-		echo -e "\033[0m"
-	fi
-fi
-
-if [ -d $WORKSPACE_PATH/cranium/src ]
-then
-	echo -e "\033[1;32mSTATUS: Building cranium."
+	echo -e "\033[1;32mSTATUS: Building tools."
 	echo -e "\033[0m"
-	cd $WORKSPACE_PATH/cranium
+	cd $WORKSPACE_PATH/tools
+	source ~/.bashrc
 	colcon build --symlink-install
-	echo -e "\033[1;32mSTATUS: cranium built."
+	echo -e "\033[1;32mSTATUS: tools built."
 	echo -e "\033[0m"
 
-	# Source cranium logic if it does not exist.
-	if ! grep -qF "source $WORKSPACE_PATH/cranium/install/setup.bash" /home/$USER/.bashrc
+	# Source tools logic if it does not exist.
+	if ! grep -qF "source $WORKSPACE_PATH/tools/install/setup.bash" /home/$USER/.bashrc
 	then
-		source $WORKSPACE_PATH/cranium/install/setup.bash
+		source $WORKSPACE_PATH/tools/install/setup.bash
 		cat << EOF >> /home/$USER/.bashrc
-if [ -f $WORKSPACE_PATH/cranium/install/setup.bash ]; then
-	source $WORKSPACE_PATH/cranium/install/setup.bash
+if [ -f $WORKSPACE_PATH/tools/install/setup.bash ]; then
+	source $WORKSPACE_PATH/tools/install/setup.bash
 fi
 EOF
 	fi
@@ -371,6 +371,29 @@ EOF
 	eval "$( cat /home/$USER/.bashrc | tail -n +10)"
 fi
 
+if [ -d $WORKSPACE_PATH/cranium/src ]
+then
+	echo -e "\033[1;32mSTATUS: Building cranium."
+	echo -e "\033[0m"
+	cd $WORKSPACE_PATH/cranium
+	colcon build --symlink-install
+	echo -e "\033[1;32mSTATUS: cranium built."
+	echo -e "\033[0m"
+
+	# Source cranium logic if it does not exist.
+	if ! grep -qF "source $WORKSPACE_PATH/cranium/install/setup.bash" /home/$USER/.bashrc
+	then
+		source $WORKSPACE_PATH/cranium/install/setup.bash
+		cat << EOF >> /home/$USER/.bashrc
+if [ -f $WORKSPACE_PATH/cranium/install/setup.bash ]; then
+	source $WORKSPACE_PATH/cranium/install/setup.bash
+fi
+EOF
+	fi
+	cd $WORKSPACE_PATH
+	eval "$( cat /home/$USER/.bashrc | tail -n +10)"
+fi
+
 if [ -d $WORKSPACE_PATH/electrode/src ]
 then
 	echo -e "\033[1;32mSTATUS: Building electrode."
@@ -388,30 +411,6 @@ then
 		cat << EOF >> /home/$USER/.bashrc
 if [ -f $WORKSPACE_PATH/electrode/install/setup.bash ]; then
 	source $WORKSPACE_PATH/electrode/install/setup.bash
-fi
-EOF
-	fi
-	cd $WORKSPACE_PATH
-	eval "$( cat /home/$USER/.bashrc | tail -n +10)"
-fi
-
-if [ -d $WORKSPACE_PATH/tools/src ]
-then
-	echo -e "\033[1;32mSTATUS: Building tools."
-	echo -e "\033[0m"
-	cd $WORKSPACE_PATH/tools
-	source ~/.bashrc
-	colcon build --symlink-install
-	echo -e "\033[1;32mSTATUS: tools built."
-	echo -e "\033[0m"
-
-	# Source tools logic if it does not exist.
-	if ! grep -qF "source $WORKSPACE_PATH/tools/install/setup.bash" /home/$USER/.bashrc
-	then
-		source $WORKSPACE_PATH/tools/install/setup.bash
-		cat << EOF >> /home/$USER/.bashrc
-if [ -f $WORKSPACE_PATH/tools/install/setup.bash ]; then
-	source $WORKSPACE_PATH/tools/install/setup.bash
 fi
 EOF
 	fi
