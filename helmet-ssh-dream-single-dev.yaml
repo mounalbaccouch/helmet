@@ -1,22 +1,22 @@
 ---
 repositories:
-  cerebri_workspace/cerebri:
+  cranium/src/cerebri:
     type: git
     url: git@github.com:CogniPilot/cerebri
-    version: main
-  ws/src/corti:
+    version: pr-freestanding
+  cranium/src/corti:
     type: git
     url: git@github.com:CogniPilot/corti
     version: main
-  ws/src/synapse_msgs:
+  cranium/src/synapse_msgs:
     type: git
     url: git@github.com:cognipilot/synapse_msgs
     version: main
-  ws/src/dream:
+  cranium/src/dream:
     type: git
     url: git@github.com:CogniPilot/dream
     version: main
-  ws/src/electrode:
+  cranium/src/electrode:
     type: git
     url: git@github.com:CogniPilot/electrode
     version: main
@@ -34,8 +34,8 @@ repositories:
     version: gz-fuel-tools8
   gazebo/src/gz-sim:
     type: git
-    url: git@github.com:rudislabs/gz-sim
-    version: cognipilot
+    url: git@github.com:gazebosim/gz-sim
+    version: gz-sim7
   gazebo/src/gz-gui:
     type: git
     url: git@github.com:rudislabs/gz-gui
@@ -66,8 +66,8 @@ repositories:
     version: gz-rendering7
   gazebo/src/gz-sensors:
     type: git
-    url: git@github.com:rudislabs/gz-sensors
-    version: cognipilot
+    url: git@github.com:gazebosim/gz-sensors
+    version: gz-sensors7
   gazebo/src/gz-tools:
     type: git
     url: git@github.com:gazebosim/gz-tools
@@ -82,17 +82,22 @@ repositories:
     version: gz-utils2
   gazebo/src/sdformat:
     type: git
-    url: git@github.com:rudislabs/sdformat
-    version: cognipilot
+    url: git@github.com:gazebosim/sdformat
+    version: sdf13
   gazebo/src/ros_gz:
     type: git
     url: git@github.com:rudislabs/ros_gz
     version: cognipilot
-  tools/hcdformat:
+  zephyr_workspace:
+    type: git
+    url: git@github.com:CogniPilot/zephyr_workspace
+    version: main
+  cranium/src/hcdformat:
     type: git
     url: git@github.com:CogniPilot/hcdformat
     version: main
-  tools/pyecca:
+  cranium/src/pyecca:
     type: git
     url: git@github.com:CogniPilot/pyecca
     version: main
+
