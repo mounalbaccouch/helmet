@@ -88,6 +88,10 @@ repositories:
     type: git
     url: git@github.com:rudislabs/ros_gz
     version: cognipilot
+  tools/zephyr_workspace:
+    type: git
+    url: git@github.com:CogniPilot/zephyr_workspace
+    version: main
   tools/src/hcdformat:
     type: git
     url: git@github.com:CogniPilot/hcdformat

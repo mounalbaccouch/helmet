@@ -59,11 +59,11 @@ sudo apt-get install --no-install-recommends -y \
 
 SCRIPT_PATH="$(dirname $(readlink -f $0))"
 WORKSPACE_PATH="$(echo "$SCRIPT_PATH" | sed 's/\/helmet\/scripts//')"
+CURRENT_USER=`whoami`
 
 # Setup west
 if ! [ -f /opt/.venv-zephyr/bin/activate ]
 then
-	CURRENT_USER=`whoami`
 	sudo mkdir /opt/.venv-zephyr
 	sudo chown $CURRENT_USER:$CURRENT_USER /opt/.venv-zephyr
 	python3 -m venv --prompt zephyr /opt/.venv-zephyr
@@ -73,7 +73,6 @@ then
 	pip install catkin-tools
 	pip install -r https://raw.githubusercontent.com/zephyrproject-rtos/zephyr/master/scripts/requirements.txt
 	pip3 check
-	sudo chown $CURRENT_USER:$CURRENT_USER /opt/zephyr
 	deactivate
 	mkdir -p /home/$USER/bin
 	ln -s /opt/.venv-zephyr/bin/west /home/$USER/bin/west
@@ -104,21 +103,6 @@ then
 	echo -e "\033[0m"
 else
 	echo -e "\033[1;32mSTATUS: zephyr sdk has already been installed and linked."
-	echo -e "\033[0m"
-fi
-
-if ! [ -f /opt/zephyr/.west ]
-then
-	source /opt/.venv-zephyr/bin/activate
-	pip install catkin-tools
-	sudo mkdir -p /opt/zephyr
-	cd /opt/zephyr
-	west init --mr v3.2.0
-	deactivate
-	echo -e "\033[1;32mSTATUS: zephyr base has been installed."
-	echo -e "\033[0m"
-else
-	echo -e "\033[1;32mSTATUS: zephyr base has already been installed."
 	echo -e "\033[0m"
 fi
 
@@ -201,18 +185,6 @@ else
 	echo -e "\033[0m"
 fi
 
-# Export zephyr base if it does not exist.
-if ! grep -qF "export ZEPHYR_BASE=/opt/zephyr/zephyr" /home/$USER/.bashrc
-then
-	export ZEPHYR_BASE=/opt/zephyr/zephyr
-	echo "export ZEPHYR_BASE=/opt/zephyr/zephyr" >> /home/$USER/.bashrc
-	echo -e "\033[1;32mSTATUS: Added ZEPHYR_BASE to ~/.bashrc"
-	echo -e "\033[0m"
-else
-	echo -e "\033[1;32mSTATUS: ZEPHYR_BASE already in ~/.bashrc"
-	echo -e "\033[0m"
-fi
-
 # Source humble if it does not exist.
 if ! grep -qF "source /opt/ros/humble/setup.bash" /home/$USER/.bashrc
 then
@@ -270,6 +242,37 @@ then
 	vcs pull
 fi
 
+if [ -d $WORKSPACE_PATH/tools/zephyr_workspace ]
+then
+	if ! [ -f $WORKSPACE_PATH/tools/zephyr_workspace/.west ]
+	then
+		source /opt/.venv-zephyr/bin/activate
+		cd $WORKSPACE_PATH/tools/zephyr_workspace
+		west init -l --mf west.yml west_config 
+		west update
+		deactivate
+		echo -e "\033[1;32mSTATUS: zephyr base has been added."
+		echo -e "\033[0m"
+	else
+		echo -e "\033[1;32mSTATUS: zephyr base has already been added."
+		echo -e "\033[0m"
+	fi
+
+	# Export zephyr base if it does not exist.
+	if ! grep -qF "export ZEPHYR_BASE=$WORKSPACE_PATH/tools/zephyr_workspace/zephyr" /home/$USER/.bashrc
+	then
+		export ZEPHYR_BASE=$WORKSPACE_PATH/tools/zephyr_workspace/zephyr
+		echo "export ZEPHYR_BASE=$WORKSPACE_PATH/tools/zephyr_workspace/zephyr" >> /home/$USER/.bashrc
+		echo -e "\033[1;32mSTATUS: Added ZEPHYR_BASE to ~/.bashrc"
+		echo -e "\033[0m"
+	else
+		echo -e "\033[1;32mSTATUS: ZEPHYR_BASE already in ~/.bashrc"
+		echo -e "\033[0m"
+	fi
+	cd $WORKSPACE_PATH
+	eval "$( cat /home/$USER/.bashrc | tail -n +10)"
+fi
+
 if [ -d $WORKSPACE_PATH/cerebri_workspace/cerebri ]
 then
 	if ! [ -f $/home/$USER/bin/cerebri ]
@@ -305,8 +308,6 @@ EOF
 	cd $WORKSPACE_PATH
 	eval "$( cat /home/$USER/.bashrc | tail -n +10)"
 fi
-
-
 
 if [ -d $WORKSPACE_PATH/gazebo/src ]
 then
