@@ -2,23 +2,23 @@
 repositories:
   cranium/src/cerebri:
     type: git
-    url: git@github.com:CogniPilot/cerebri
+    url: git@github.com:cognipilot/cerebri
     version: pr-freestanding
   cranium/src/corti:
     type: git
-    url: git@github.com:CogniPilot/corti
-    version: main
-  cranium/src/synapse_msgs:
-    type: git
-    url: git@github.com:cognipilot/synapse_msgs
+    url: git@github.com:cognipilot/corti
     version: main
   cranium/src/dream:
     type: git
-    url: git@github.com:CogniPilot/dream
+    url: git@github.com:cognipilot/dream
     version: main
   cranium/src/electrode:
     type: git
-    url: git@github.com:CogniPilot/electrode
+    url: git@github.com:cognipilot/electrode
+    version: main
+  gazebo/src/synapse_msgs:
+    type: git
+    url: git@github.com:cognipilot/synapse_msgs
     version: main
   gazebo/src/gz-cmake:
     type: git
