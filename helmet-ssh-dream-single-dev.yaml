@@ -16,6 +16,18 @@ repositories:
     type: git
     url: git@github.com:cognipilot/electrode
     version: main
+  cranium/src/hcdformat:
+    type: git
+    url: git@github.com:CogniPilot/hcdformat
+    version: main
+  cranium/src/pyecca:
+    type: git
+    url: git@github.com:CogniPilot/pyecca
+    version: main
+  zephyr_workspace:
+    type: git
+    url: git@github.com:CogniPilot/zephyr_workspace
+    version: main
   gazebo/src/synapse_msgs:
     type: git
     url: git@github.com:cognipilot/synapse_msgs
@@ -88,16 +100,3 @@ repositories:
     type: git
     url: git@github.com:rudislabs/ros_gz
     version: cognipilot
-  zephyr_workspace:
-    type: git
-    url: git@github.com:CogniPilot/zephyr_workspace
-    version: main
-  cranium/src/hcdformat:
-    type: git
-    url: git@github.com:CogniPilot/hcdformat
-    version: main
-  cranium/src/pyecca:
-    type: git
-    url: git@github.com:CogniPilot/pyecca
-    version: main
-
