@@ -2,23 +2,27 @@
 repositories:
   cranium/src/cerebri:
     type: git
-    url: git@github.com:CogniPilot/cerebri
+    url: git@github.com:cognipilot/cerebri
     version: pr-freestanding
   cranium/src/corti:
     type: git
-    url: git@github.com:CogniPilot/corti
+    url: git@github.com:cognipilot/corti
+    version: main
+  cranium/src/dream:
+    type: git
+    url: git@github.com:cognipilot/dream
+    version: main
+  cranium/src/mrb3_description:
+    type: git
+    url: git@github.com:cognipilot/mrb3_description
+    version: main
+  electrode/src/electrode:
+    type: git
+    url: git@github.com:cognipilot/electrode
     version: main
   gazebo/src/synapse_msgs:
     type: git
     url: git@github.com:cognipilot/synapse_msgs
-    version: main
-  cranium/src/dream:
-    type: git
-    url: git@github.com:CogniPilot/dream
-    version: main
-  electrode/src/electrode:
-    type: git
-    url: git@github.com:CogniPilot/electrode
     version: main
   gazebo/src/gz-cmake:
     type: git
@@ -90,13 +94,13 @@ repositories:
     version: cognipilot
   tools/zephyr_workspace:
     type: git
-    url: git@github.com:CogniPilot/zephyr_workspace
+    url: git@github.com:cognipilot/zephyr_workspace
     version: main
   tools/src/hcdformat:
     type: git
-    url: git@github.com:CogniPilot/hcdformat
+    url: git@github.com:cognipilot/hcdformat
     version: main
   tools/pyecca:
     type: git
-    url: git@github.com:CogniPilot/pyecca
+    url: git@github.com:cognipilot/pyecca
     version: main
