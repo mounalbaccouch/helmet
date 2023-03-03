@@ -3,7 +3,7 @@ repositories:
   cranium/src/cerebri:
     type: git
     url: git@github.com:cognipilot/cerebri
-    version: pr-freestanding
+    version: main
   cranium/src/corti:
     type: git
     url: git@github.com:cognipilot/corti
