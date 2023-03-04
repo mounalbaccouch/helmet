@@ -8,18 +8,6 @@ repositories:
     type: git
     url: git@github.com:cognipilot/corti
     version: main
-  cranium/src/dream:
-    type: git
-    url: git@github.com:cognipilot/dream
-    version: main
-  cranium/src/mrb3_description:
-    type: git
-    url: git@github.com:cognipilot/mrb3_description
-    version: main
-  cranium/src/electrode:
-    type: git
-    url: git@github.com:cognipilot/electrode
-    version: main
   cranium/src/hcdformat:
     type: git
     url: git@github.com:CogniPilot/hcdformat
@@ -27,6 +15,26 @@ repositories:
   cranium/src/pyecca:
     type: git
     url: git@github.com:CogniPilot/pyecca
+    version: main
+  cranium/src/mrbuggy3:
+    type: git
+    url: git@github.com:CogniPilot/mrbuggy3
+    version: main
+  cranium/src/mrbuggy3_simulator:
+    type: git
+    url: git@github.com:CogniPilot/mrbuggy3_simulator
+    version: main
+  cranium/src/mrbuggy3_desktop:
+    type: git
+    url: git@github.com:CogniPilot/mrbuggy3_desktop
+    version: main
+  cranium/src/qualisys_cpp_sdk:
+    type: git
+    url: https://github.com/jgoppert/qualisys_cpp_sdk
+    version: install_fix
+  cranium/src/qualisys_mocap:
+    type: git
+    url: git@github.com:cognipilot/qualisys_mocap
     version: main
   zephyr_workspace:
     type: git
