@@ -3,7 +3,7 @@ repositories:
   cranium/src/cerebri:
     type: git
     url: git@github.com:cognipilot/cerebri
-    version: pr-freestanding
+    version: main
   cranium/src/corti:
     type: git
     url: git@github.com:cognipilot/corti
@@ -19,6 +19,22 @@ repositories:
   electrode/src/electrode:
     type: git
     url: git@github.com:cognipilot/electrode
+    version: main
+  cranium/src/mrbuggy3:
+    type: git
+    url: git@github.com:CogniPilot/mrbuggy3
+    version: main
+  cranium/src/mrbuggy3_robot:
+    type: git
+    url: git@github.com:CogniPilot/mrbuggy3_robot
+    version: main
+  cranium/src/mrbuggy3_simulator:
+    type: git
+    url: git@github.com:CogniPilot/mrbuggy3_simulator
+    version: main
+  cranium/src/mrbuggy3_desktop:
+    type: git
+    url: git@github.com:CogniPilot/mrbuggy3_desktop
     version: main
   gazebo/src/synapse_msgs:
     type: git
