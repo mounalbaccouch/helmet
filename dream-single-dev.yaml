@@ -20,6 +20,10 @@ repositories:
     type: git
     url: git@github.com:CogniPilot/mrbuggy3
     version: main
+  cranium/src/mrbuggy3_robot:
+    type: git
+    url: git@github.com:CogniPilot/mrbuggy3_robot
+    version: main
   cranium/src/mrbuggy3_simulator:
     type: git
     url: git@github.com:CogniPilot/mrbuggy3_simulator
