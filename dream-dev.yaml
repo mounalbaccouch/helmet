@@ -12,10 +12,6 @@ repositories:
     type: git
     url: git@github.com:cognipilot/dream
     version: main
-  cranium/src/mrb3_description:
-    type: git
-    url: git@github.com:cognipilot/mrb3_description
-    version: main
   electrode/src/electrode:
     type: git
     url: git@github.com:cognipilot/electrode
