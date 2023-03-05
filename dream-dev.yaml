@@ -32,6 +32,22 @@ repositories:
     type: git
     url: git@github.com:CogniPilot/mrbuggy3_desktop
     version: main
+  cranium/src/elm4:
+    type: git
+    url: git@github.com:CogniPilot/elm4
+    version: main
+  cranium/src/elm4_robot:
+    type: git
+    url: git@github.com:CogniPilot/elm4_robot
+    version: main
+  cranium/src/elm4_simulator:
+    type: git
+    url: git@github.com:CogniPilot/elm4_simulator
+    version: main
+  cranium/src/elm4_desktop:
+    type: git
+    url: git@github.com:CogniPilot/elm4_desktop
+    version: main
   gazebo/src/synapse_msgs:
     type: git
     url: git@github.com:cognipilot/synapse_msgs
