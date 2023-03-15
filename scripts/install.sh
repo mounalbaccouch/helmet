@@ -142,11 +142,14 @@ sudo apt-get install --no-install-recommends -y \
 	ros-humble-desktop \
 	ros-humble-cyclonedds \
 	ros-humble-gps-msgs \
+	ros-humble-nav2-bringup \
 	ros-humble-rmw-cyclonedds-cpp \
+	pykwalify \
 	python3-colcon-common-extensions \
 	python3-colcon-ros \
 	python3-jinja2 \
 	python3-numpy \
+	python3-pyelftools \
 	python3-vcstool \
 	python3-xdg \
 	python3-xmltodict \
